@@ -1,0 +1,134 @@
+#include<iostream>
+using namespace std;
+
+class Node{
+    public:
+        int data;
+        Node *next;
+};
+
+class LinkedList{
+    public:
+        //Data Members
+        int length;
+        Node *head;
+
+        //Member Functions
+        LinkedList();
+        void DisplayLinkedList();
+        void insert();
+        ~LinkedList();
+};
+
+LinkedList :: LinkedList(){
+    head = new Node;
+    head -> data = NULL;
+    head -> next = NULL;
+
+    Node *lastNode = new Node;
+    lastNode = head;
+
+    int i = 0;
+    while (1)
+    {   
+        i++;
+        
+        int x;
+        cout << "Enter the Data No. " << i << " for the linked list (Insert 0 to stop) : ";
+        cin >> x;
+
+        if(x == 0){
+            break;
+        }
+
+        length = i;
+
+        lastNode -> next = new Node;
+        lastNode -> next -> data = x;
+        lastNode -> next -> next = NULL;
+        lastNode = lastNode -> next;
+
+    }
+    
+}
+
+void LinkedList :: DisplayLinkedList(){
+    int Len;
+    while(1){
+        cout<<"Enter the Length till where you want to print the linked list ";
+        cout<<"(The maximum size is "<<length<<"). :";
+        cin>>Len;
+
+        if(Len == 0 ){
+            cout<<"Thankyou! I am Exiting"<<endl;
+            break;
+        }
+        if(Len > length){
+            cout<<"SORRY! Input is Exceding the Limit"<<endl;
+            int Decision;
+            cout<<"If You want to TRY AGAIN :: Press 1 :: O/R EXIT :: Press 0 :: "<<endl;
+            cin >> Decision;
+            if(Decision != 1){
+                break;
+            }
+            else{
+                DisplayLinkedList();
+            }
+        }
+        else{
+            Node *t;
+            t = head;
+            for (int i = 1 ; i <= Len ; i++)
+            {
+                cout << t -> next -> data <<endl;
+                t = t -> next;
+            }
+        }
+    }
+     
+}
+
+void LinkedList :: insert(){
+
+    int newData;
+    cout<<"Enter the Data you want to insert :";
+    cin>>newData;
+
+    int index;
+    cout<<"Enter the index at which you want to insert the data :";
+    cin>>index;
+
+
+    cout<<"We are Inserting here ..."<<endl;
+
+
+    Node *temp;
+    temp = head;
+    for(int i = 1 ; i <= index-1 ; i++){
+        temp = temp -> next;
+    }
+    Node *temp2 = temp -> next;
+    temp -> next = new Node;
+    temp -> next -> data = newData;
+    temp -> next -> next = temp2;
+    length++;
+
+}
+
+LinkedList :: ~LinkedList(){
+    Node *q = head;
+    Node *p;
+    for(int i = 1 ; i <= length; i++){
+        p = q -> next;
+        delete q;
+        q = p;
+    }
+    cout<<"Linked List Erased";
+}
+
+int main(){
+    LinkedList LL1;
+    LL1.DisplayLinkedList();
+    LL1.insert();
+    LL1.DisplayLinkedList();
+}
