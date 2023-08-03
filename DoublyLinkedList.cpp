@@ -1,0 +1,120 @@
+#include<iostream>
+
+using namespace std;
+
+class Node{
+    public:
+        int data;
+        Node *next;
+        Node *prev;
+};
+
+
+class DoublyLinkedList{
+    public:
+        //Data Member 
+        Node *head,*tail;
+
+        //Member Function
+        DoublyLinkedList(int Array[] , int size);
+        void AddData(int data , int index);
+        void BackwordDisplayDLL(int index);
+        void ForwardDisplay(int index);
+        void UpdateData(int data , int index);
+};
+
+DoublyLinkedList :: DoublyLinkedList(int Array[] , int size){
+
+    head = new Node;
+    head->data = NULL;
+    head->prev = NULL;
+    head->next = NULL;
+
+    tail = head;
+    for(int i = 0; i < size ; i++){
+        Node *newNode = new Node;
+        newNode -> data = Array[i];
+        tail -> next = newNode;
+        newNode -> prev = tail;
+        newNode -> next = NULL;
+        tail = tail -> next;
+    }
+    cout << "Linked List created" << endl;
+    cout<<endl;
+    cout<<endl;
+}
+
+void DoublyLinkedList :: AddData(int data , int index){
+    cout<<"Adding New Data"<<endl;
+    cout<<endl;
+
+    Node *temp , *temp2;
+    temp = head;
+    for(int i = 0 ; i < index-1 ; i++){
+        temp = temp -> next;
+    }
+    temp2 = temp -> next;
+
+    Node *newNode = new Node;
+    newNode -> data = data;
+    temp -> next = newNode;
+    newNode -> next = temp2;
+    newNode -> prev = temp;
+    temp2 -> prev = newNode;
+}
+
+void DoublyLinkedList :: UpdateData(int data , int index){
+    cout<<"Updating New Data"<<endl;
+    cout<<endl;
+
+    Node *temp , *temp2;
+    temp = head;
+    for(int i = 0 ; i < index ; i++){
+        temp = temp -> next;
+    }
+    temp -> data = data;
+}
+
+void DoublyLinkedList :: ForwardDisplay(int index){
+    cout<<"Displaying Forword"<<endl;
+    cout<<endl;
+
+    Node *temp;
+    temp = head;
+    for(int i = 0 ; i < index ; i++){
+        cout << temp -> next -> data << endl;
+        temp = temp -> next;
+    }
+}
+
+void DoublyLinkedList :: BackwordDisplayDLL(int index){
+    cout<<"Displaying Reversely"<<endl;
+    cout<<endl;
+
+    Node *temp;
+    temp = tail;
+    for(int i = 0 ; i < index ; i++){
+        cout << temp -> data << endl;
+        temp = temp -> prev;
+    }
+}
+
+int main(){
+    int n;
+    cout<<"Enter the No. of data you want to insert in the list : ";
+    cin>>n;
+    int arr[n];
+    for(int i = 0 ; i < n ; i++){
+        cout<<"Enter the "<<i<<" Digit : ";
+        cin>>arr[i];
+    }
+
+    DoublyLinkedList Dll1(arr,n);
+    Dll1.ForwardDisplay(5);
+    Dll1.AddData(44,3);
+    Dll1.BackwordDisplayDLL(6);
+    Dll1.UpdateData(24,5);
+    Dll1.ForwardDisplay(6);
+    Dll1.BackwordDisplayDLL(6); 
+    
+}
